@@ -1,11 +1,11 @@
-/* Reset básico */
+
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
 }
 
-/* Fundo estilo galáxia simples */
+
 body{
     font-family: Arial, Helvetica, sans-serif;
     color: white;
@@ -19,7 +19,7 @@ body{
     background-attachment: fixed;
 }
 
-/* Título principal */
+
 h1{
     text-align:center;
     margin-top:40px;
@@ -27,17 +27,19 @@ h1{
     font-size:40px;
 }
 
-/* Subtítulos */
 h2{
     margin-bottom:15px;
 }
 
-/* Container central */
+
 .container{
     text-align:center;
+    width:90%;
+    max-width:1000px;
+    margin:auto;
 }
 
-/* Links dos anos */
+
 .anos a{
     text-decoration:none;
     color:white;
@@ -57,7 +59,7 @@ h2{
     transform:scale(1.05);
 }
 
-/* Botão voltar */
+
 .voltar{
     text-align:center;
     margin-top:20px;
@@ -66,28 +68,83 @@ h2{
 .voltar a{
     color:#cfcfff;
     text-decoration:none;
+    transition: 0.3s;
 }
 
 .voltar a:hover{
     text-decoration:underline;
 }
 
-/* Conteúdo das páginas */
+
 .conteudo{
     width:70%;
     margin:auto;
     margin-top:30px;
 }
 
-/* Lista */
+
 ul{
     margin-bottom:20px;
 }
 
-/* Blocos das matérias */
+
 .materia{
     background-color: rgba(255,255,255,0.08);
     padding:15px;
     margin-bottom:15px;
     border-radius:10px;
+    transition: 0.3s;
+}
+
+.materia:hover{
+    background-color: rgba(255,255,255,0.2);
+    transform: scale(1.02);
+}
+
+
+.foto img{
+    width: 300px;
+    height: 500px;
+    object-fit: cover;
+    border-radius: 15%;
+    margin: 20px auto;
+    display: block;
+    border: 3px solid rgba(255,255,255,0.2);
+}
+
+
+section{
+    margin: 30px 0;
+    text-align: center;
+}
+
+
+.especialidades ul{
+    list-style: none;
+    padding: 0;
+}
+
+.especialidades li{
+    background-color: rgba(255,255,255,0.08);
+    margin: 10px auto;
+    padding: 10px 15px;
+    width: 200px;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.especialidades li:hover{
+    background-color: rgba(255,255,255,0.2);
+    transform: scale(1.05);
+}
+
+
+.contato a{
+    color: #cfcfff;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.contato a:hover{
+    text-decoration: underline;
 }
