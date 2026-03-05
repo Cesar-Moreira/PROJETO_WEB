@@ -1,0 +1,93 @@
+/* Reset básico */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+/* Fundo estilo galáxia simples */
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    min-height: 100vh;
+
+    background: radial-gradient(circle at 20% 30%, #2b1055, transparent 40%),
+                radial-gradient(circle at 80% 20%, #1b1b3a, transparent 40%),
+                radial-gradient(circle at 50% 80%, #3a0f4f, transparent 40%),
+                #070b1a;
+
+    background-attachment: fixed;
+}
+
+/* Título principal */
+h1{
+    text-align:center;
+    margin-top:40px;
+    margin-bottom:30px;
+    font-size:40px;
+}
+
+/* Subtítulos */
+h2{
+    margin-bottom:15px;
+}
+
+/* Container central */
+.container{
+    text-align:center;
+}
+
+/* Links dos anos */
+.anos a{
+    text-decoration:none;
+    color:white;
+}
+
+.anos h2{
+    display:inline-block;
+    margin:15px;
+    padding:15px 30px;
+    background-color: rgba(255,255,255,0.1);
+    border-radius:10px;
+    transition:0.3s;
+}
+
+.anos h2:hover{
+    background-color: rgba(255,255,255,0.25);
+    transform:scale(1.05);
+}
+
+/* Botão voltar */
+.voltar{
+    text-align:center;
+    margin-top:20px;
+}
+
+.voltar a{
+    color:#cfcfff;
+    text-decoration:none;
+}
+
+.voltar a:hover{
+    text-decoration:underline;
+}
+
+/* Conteúdo das páginas */
+.conteudo{
+    width:70%;
+    margin:auto;
+    margin-top:30px;
+}
+
+/* Lista */
+ul{
+    margin-bottom:20px;
+}
+
+/* Blocos das matérias */
+.materia{
+    background-color: rgba(255,255,255,0.08);
+    padding:15px;
+    margin-bottom:15px;
+    border-radius:10px;
+}
