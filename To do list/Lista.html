@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>To-Do List</title>
+  <link rel="stylesheet" href="CSS/Css.css">
+</head>
+<body>
+
+  <h2>Lista de Tarefas</h2>
+
+  <input type="text" id="tarefaInput" placeholder="Digite a tarefa">
+  <input type="date" id="dataInput">
+  <button onclick="adicionarTarefa()">Adicionar</button>
+
+  <p id="contador">Total de tarefas: 0</p>
+
+  <ul id="listaTarefas"></ul>
+
+  <script>
+    let contador = 0;
+
+    // Impede digitação manual no input date
+    document.getElementById("dataInput").addEventListener("keydown", function(e) {
+      e.preventDefault();
+    });
+
+    function atualizarContador() {
+      document.getElementById("contador").innerText =
+        "Total de tarefas: " + contador;
+    }
+
+    function adicionarTarefa() {
+      let tarefaTexto = document.getElementById("tarefaInput").value;
+      let dataValor = document.getElementById("dataInput").value;
+
+      if (tarefaTexto.trim() === "" || dataValor === "") {
+        alert("Preencha todos os campos!");
+        return;
+      }
+
+      if (tarefaTexto.length  < 3 ) {
+        alert("Mínimo de 3 caracteres!");
+        return;
+      }
+
+      if (tarefaTexto.length  > 50 ) {
+        alert("Mucho texTO");
+        return;
+            }
+  
+      let partesData = dataValor.split("-");
+      let dataFormatada = partesData[2] + "/" + partesData[1] + "/" + partesData[0];
+
+      let li = document.createElement("li");
+
+    
+      let spanTarefa = document.createElement("span");
+      spanTarefa.innerText = tarefaTexto;
+
+ 
+      let spanData = document.createElement("span");
+      spanData.className = "data";
+      spanData.innerText = dataFormatada;
+
+    
+      let btnConcluir = document.createElement("button");
+      btnConcluir.innerText = "Concluir";
+      btnConcluir.onclick = function() {
+        li.classList.toggle("concluida");
+      };
+
+      let btnRemover = document.createElement("button");
+      btnRemover.innerText = "Remover";
+      btnRemover.onclick = function() {
+        li.remove();
+        contador--;
+        atualizarContador();
+      };
+
+
+      let divBotoes = document.createElement("div");
+      divBotoes.className = "botoes";
+      divBotoes.appendChild(btnConcluir);
+      divBotoes.appendChild(btnRemover);
+
+    
+      li.appendChild(spanTarefa);
+      li.appendChild(spanData);
+      li.appendChild(divBotoes);
+
+      document.getElementById("listaTarefas").appendChild(li);
+
+      contador++;
+      atualizarContador();
+
+      document.getElementById("tarefaInput").value = "";
+      document.getElementById("dataInput").value = "";
+    }
+  </script>
+
+</body>
+</html>
