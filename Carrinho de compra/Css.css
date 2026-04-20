@@ -1,0 +1,40 @@
+body {
+    background-color: #0d0d0d;
+    color: white;
+    font-family: Arial;
+    text-align: center;
+}
+
+h1 {
+    color: #1e90ff;
+}
+
+.container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.produtos, .carrinho {
+    background-color: #1a1a1a;
+    padding: 20px;
+    width: 40%;
+    border-radius: 10px;
+}
+
+button {
+    background-color: #1e90ff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin-top: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0b63c5;
+}
+
+select {
+    margin-bottom: 10px;
+}

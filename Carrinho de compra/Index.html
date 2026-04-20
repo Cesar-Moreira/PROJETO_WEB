@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Carrinho de Compras</title>
+    <link rel="stylesheet" href="Css.css">
+</head>
+<body>
+
+    <h1>Loja do Cesão</h1>
+
+    <div class="container">
+
+        <div class="produtos">
+            <h2>Produtos</h2>
+
+            <select id="filtro">
+                <option value="todos">Todos</option>
+                <option value="ate50">Até R$50</option>
+                <option value="acima50">Acima de R$50</option>
+            </select>
+
+            <div id="lista-produtos"></div>
+        </div>
+
+        <div class="carrinho">
+            <h2>Carrinho</h2>
+            <div id="lista-carrinho"></div>
+
+            <h3>Total: R$ <span id="total">0</span></h3>
+
+            
+            <button onclick="limparCarrinho()">Limpar Carrinho</button>
+        </div>
+
+    </div>
+
+    <script src="JavaScript.js"></script>
+</body>
+</html>
