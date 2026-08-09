@@ -1,0 +1,9 @@
+# Credenciais - NUNCA subir para o GitHub
+.env
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
