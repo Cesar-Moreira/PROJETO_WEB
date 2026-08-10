@@ -1,19 +1,19 @@
-# 🌍 CRUD Mundo — Programação Web
+#  CRUD Mundo — Programação Web
 
 **Aluno(a):** _Cesar Fernando Araujo Moreira_
 **Curso:** Desenvolvimento de Sistemas
 **Unidade:** Etec — São José dos Campos
 **Disciplina:** Programação Web
 
-## 📖 Descrição do projeto
+##  Descrição do projeto
 
 Sistema web completo para gerenciamento de informações geográficas do mundo, permitindo cadastrar, listar, editar e excluir **Continentes**, **Países**, **Cidades** e **Governantes**, respeitando os relacionamentos entre essas entidades (um continente tem vários países, um país tem várias cidades, e países/cidades podem ter um governante vinculado).
 
-## 🎯 Objetivo
+##  Objetivo
 
 Implementar um CRUD (Create, Read, Update, Delete) completo, com interface web responsiva, validação de dados no frontend e no backend, e integridade referencial no banco de dados.
 
-## 🛠️ Tecnologias utilizadas
+##  Tecnologias utilizadas
 
 - HTML5
 - CSS3 (Flexbox, Grid, responsivo)
@@ -24,7 +24,7 @@ Implementar um CRUD (Create, Read, Update, Delete) completo, com interface web r
 - Google Fonts (tipografia)
 - Normalize.css (consistência entre navegadores)
 
-## 📁 Estrutura do projeto
+##  Estrutura do projeto
 
 ```
 crud_mundo/
@@ -65,7 +65,7 @@ Cada módulo (`php/continentes/`, `php/paises/`, `php/cidades/`, `php/governante
 - `editar.php` — formulário de edição, pré-preenchido
 - `excluir.php` — processa a exclusão (com confirmação via JavaScript antes)
 
-## 🗄️ Estrutura do banco de dados (bd_mundo)
+##  Estrutura do banco de dados (bd_mundo)
 
 | Tabela | Campos principais | Relacionamento |
 |---|---|---|
@@ -80,7 +80,7 @@ Cada módulo (`php/continentes/`, `php/paises/`, `php/cidades/`, `php/governante
 - Não é possível excluir um continente que tenha países vinculados, nem um país que tenha cidades vinculadas (`ON DELETE RESTRICT`).
 - Excluir um governante **não** apaga o país/cidade vinculado — apenas remove o vínculo (`ON DELETE SET NULL`).
 
-## ✅ Funcionalidades
+##  Funcionalidades
 
 - CRUD completo (criar, listar, editar, excluir) para os 4 módulos
 - Pesquisa dinâmica pelo nome, sem recarregar a página
@@ -91,7 +91,7 @@ Cada módulo (`php/continentes/`, `php/paises/`, `php/cidades/`, `php/governante
 - Dashboard com estatísticas em tempo real (contagens, cidade mais populosa, maior país, últimos cadastros)
 - Layout responsivo (desktop, tablet e celular)
 
-## ⚙️ Como instalar e configurar
+##  Como instalar e configurar
 
 ### Pré-requisitos
 - [XAMPP](https://www.apachefriends.org/) instalado (Apache + MySQL + PHP)
@@ -105,14 +105,14 @@ Cada módulo (`php/continentes/`, `php/paises/`, `php/cidades/`, `php/governante
 5. Acesse `http://localhost/phpmyadmin`, vá na aba **SQL**, cole o conteúdo de `sql/bd_mundo.sql` e execute. Isso cria o banco `bd_mundo`, as tabelas e alguns dados de exemplo.
 6. Acesse `http://localhost/crud_mundo/` no navegador.
 
-## 🚀 Como usar
+##  Como usar
 
 1. O **Dashboard** mostra um resumo geral do sistema.
 2. Use o menu superior para navegar entre Continentes, Países, Cidades e Governantes.
 3. Em cada módulo, use o botão "Novo(a) ..." para cadastrar, os ícones de lápis/lixeira na tabela para editar/excluir, e a caixa de pesquisa para filtrar pelo nome.
 4. Cadastre primeiro os **Continentes**, depois **Governantes** (opcional), depois **Países** (que dependem de um continente) e por fim **Cidades** (que dependem de um país).
 
-## 🔒 Boas práticas de segurança aplicadas
+##  Boas práticas de segurança aplicadas
 
 - Credenciais do banco isoladas em `.env`, fora do controle de versão
 - Conexão via PDO com **Prepared Statements** em 100% das queries (proteção contra SQL Injection)
@@ -124,13 +124,13 @@ Cada módulo (`php/continentes/`, `php/paises/`, `php/cidades/`, `php/governante
 
 > Este projeto não possui sistema de login — qualquer pessoa com acesso à URL pode cadastrar/editar/excluir. Isso é intencional, pois autenticação não fazia parte do escopo da atividade; veja "Possíveis melhorias futuras".
 
-## 🏆 Desafio extra implementado
+##  Desafio extra implementado
 
 - Pesquisa dinâmica (JavaScript) por nome em todos os módulos, sem recarregar a página
 - Dashboard com **cidade mais populosa de cada país** (não só a mais populosa do mundo)
 - Dashboard com **total de cidades cadastradas por continente**
 
-## 🔮 Possíveis melhorias futuras
+##  Possíveis melhorias futuras
 
 - Sistema de login/autenticação para restringir o acesso ao CRUD
 - Upload de bandeiras/fotos para países e cidades
@@ -138,6 +138,6 @@ Cada módulo (`php/continentes/`, `php/paises/`, `php/cidades/`, `php/governante
 - Paginação nas listagens para grandes volumes de dados
 - Gráficos no dashboard (população por continente, etc.)
 
-## 📄 Licença
+##  Licença
 
 Projeto acadêmico, desenvolvido para fins de avaliação na disciplina de Programação Web — Etec.
