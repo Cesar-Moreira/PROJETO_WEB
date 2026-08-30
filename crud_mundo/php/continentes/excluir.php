@@ -1,5 +1,6 @@
 <?php
-require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../config/auth.php';
+exigirAdministrador();
 
 // Só aceita exclusão via formulário POST (não mais por link/GET)
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -23,6 +24,12 @@ if (!$id) {
 
 $pdo = conectarBanco();
 
+// Guarda o nome ANTES de excluir, para poder registrar no log de forma legível
+$stmtNome = $pdo->prepare('SELECT nome FROM continentes WHERE id = :id');
+$stmtNome->bindParam(':id', $id, PDO::PARAM_INT);
+$stmtNome->execute();
+$nomeContinente = $stmtNome->fetchColumn();
+
 try {
     $stmt = $pdo->prepare('DELETE FROM continentes WHERE id = :id');
     $stmt->bindParam(':id', $id, PDO::PARAM_INT);
@@ -30,6 +37,7 @@ try {
 
     if ($stmt->rowCount() > 0) {
         definirMensagem('sucesso', 'Continente excluído com sucesso!');
+        registrarLog('Excluiu o continente "' . $nomeContinente . '" (ID ' . $id . ')');
     } else {
         definirMensagem('erro', 'Continente não encontrado.');
     }

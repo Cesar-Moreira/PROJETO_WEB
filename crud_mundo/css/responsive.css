@@ -47,6 +47,16 @@
         width: 100%;
     }
 
+    .navbar-usuario {
+        border-left: none;
+        border-top: 1px solid var(--cinza-claro);
+        padding-left: 0;
+        padding-top: 0.8rem;
+        margin-top: 0.8rem;
+        width: 100%;
+        justify-content: space-between;
+    }
+
     .conteudo {
         padding: 1rem;
     }

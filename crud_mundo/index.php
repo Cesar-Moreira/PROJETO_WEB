@@ -1,5 +1,6 @@
 <?php
-require_once __DIR__ . '/php/config/database.php';
+require_once __DIR__ . '/php/config/auth.php';
+exigirLogin();
 
 $tituloPagina = 'Dashboard - CRUD Mundo';
 $pdo = conectarBanco();

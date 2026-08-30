@@ -1,5 +1,6 @@
 <?php
-require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../config/auth.php';
+exigirAdministrador();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: index.php');
@@ -22,6 +23,11 @@ if (!$id) {
 
 $pdo = conectarBanco();
 
+$stmtNome = $pdo->prepare('SELECT nome FROM paises WHERE id = :id');
+$stmtNome->bindParam(':id', $id, PDO::PARAM_INT);
+$stmtNome->execute();
+$nomePais = $stmtNome->fetchColumn();
+
 try {
     $stmt = $pdo->prepare('DELETE FROM paises WHERE id = :id');
     $stmt->bindParam(':id', $id, PDO::PARAM_INT);
@@ -29,6 +35,7 @@ try {
 
     if ($stmt->rowCount() > 0) {
         definirMensagem('sucesso', 'País excluído com sucesso!');
+        registrarLog('Excluiu o país "' . $nomePais . '" (ID ' . $id . ')');
         // A trigger trg_paises_after_delete já atualiza o total_paises automaticamente
     } else {
         definirMensagem('erro', 'País não encontrado.');

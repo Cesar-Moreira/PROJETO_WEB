@@ -1,5 +1,6 @@
 <?php
-require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../config/auth.php';
+exigirAdministrador();
 
 $pdo = conectarBanco();
 
@@ -63,6 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute();
 
             definirMensagem('sucesso', 'Cidade "' . $dados['nome'] . '" cadastrada com sucesso!');
+            registrarLog('Cadastrou a cidade "' . $dados['nome'] . '"');
             header('Location: index.php');
             exit;
         } catch (PDOException $e) {

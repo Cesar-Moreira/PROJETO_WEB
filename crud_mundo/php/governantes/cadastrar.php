@@ -1,5 +1,6 @@
 <?php
-require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../config/auth.php';
+exigirAdministrador();
 
 $erros = [];
 $dados = [
@@ -62,6 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // automaticamente a partir da data de nascimento.
 
             definirMensagem('sucesso', 'Governante "' . $dados['nome'] . '" cadastrado com sucesso!');
+            registrarLog('Cadastrou o governante "' . $dados['nome'] . '"');
             header('Location: index.php');
             exit;
         } catch (PDOException $e) {

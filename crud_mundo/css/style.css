@@ -101,6 +101,37 @@ a {
     cursor: pointer;
 }
 
+.navbar-usuario {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding-left: 1rem;
+    border-left: 1px solid var(--cinza-claro);
+}
+
+.navbar-usuario-nome {
+    font-size: 0.85rem;
+    color: var(--cinza-escuro);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    white-space: nowrap;
+}
+
+.navbar-usuario-nome small {
+    color: #999;
+}
+
+.navbar-usuario a {
+    color: #999;
+    font-size: 1rem;
+    transition: color 0.2s ease;
+}
+
+.navbar-usuario a:hover {
+    color: var(--azul);
+}
+
 /* ---------------- Layout geral ---------------- */
 .conteudo {
     flex: 1;

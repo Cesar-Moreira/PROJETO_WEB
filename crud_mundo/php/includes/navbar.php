@@ -40,5 +40,25 @@ function linkAtivo(string $trecho, string $uriAtual): string
         <a href="<?= URL_BASE ?>/php/governantes/index.php" class="<?= linkAtivo('/governantes/', $uriAtual) ?>">
             <i class="fa-solid fa-user-tie"></i> Governantes
         </a>
+
+        <?php if (($_SESSION['tipo'] ?? '') === 'Administrador'): ?>
+            <a href="<?= URL_BASE ?>/php/usuarios/index.php" class="<?= linkAtivo('/usuarios/', $uriAtual) ?>">
+                <i class="fa-solid fa-users-gear"></i> Usuários
+            </a>
+            <a href="<?= URL_BASE ?>/php/logs/index.php" class="<?= linkAtivo('/logs/', $uriAtual) ?>">
+                <i class="fa-solid fa-list-check"></i> Logs
+            </a>
+        <?php endif; ?>
     </nav>
+
+    <?php if (isset($_SESSION['usuario'])): ?>
+        <div class="navbar-usuario">
+            <span class="navbar-usuario-nome">
+                <i class="fa-solid fa-circle-user"></i> <?= htmlspecialchars($_SESSION['nome_exibicao']) ?>
+                <small>(<?= htmlspecialchars($_SESSION['tipo']) ?>)</small>
+            </span>
+            <a href="<?= URL_BASE ?>/trocar_senha.php" title="Trocar senha"><i class="fa-solid fa-key"></i></a>
+            <a href="<?= URL_BASE ?>/logout.php" title="Sair"><i class="fa-solid fa-right-from-bracket"></i></a>
+        </div>
+    <?php endif; ?>
 </header>

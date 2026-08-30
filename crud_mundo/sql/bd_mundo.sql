@@ -148,8 +148,46 @@ END$$
 DELIMITER ;
 
 -- ============================================================
--- DADOS DE EXEMPLO (opcional, ajuda a testar o CRUD já na 1ª execução)
+-- MÓDULO DE AUTENTICAÇÃO
 -- ============================================================
+
+-- ------------------------------------------------------------
+-- Tabela: usuarios
+-- A chave primária é o próprio login (campo "usuario"), não um
+-- ID numérico — assim o username já é o identificador único.
+-- ------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS usuarios (
+    usuario             VARCHAR(50)  NOT NULL PRIMARY KEY,
+    nome_exibicao       VARCHAR(150) NOT NULL,
+    senha               VARCHAR(255) NOT NULL,   -- hash gerado por password_hash() (bcrypt), nunca texto puro
+    status              ENUM('Ativo', 'Inativo', 'Bloqueado') NOT NULL DEFAULT 'Ativo',
+    tipo                ENUM('Administrador', 'Comum') NOT NULL DEFAULT 'Comum',
+    qtd_acessos         INT UNSIGNED NOT NULL DEFAULT 0,   -- incrementado a cada login bem-sucedido
+    tentativas_erradas  TINYINT UNSIGNED NOT NULL DEFAULT 0, -- zerado a cada login correto; bloqueia ao chegar em 3
+    criado_em           TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+-- ------------------------------------------------------------
+-- Tabela: logs
+-- Registra as ações de escrita (cadastrar/editar/excluir) feitas
+-- no sistema, e por qual usuário.
+-- ------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS logs (
+    id           INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    usuario      VARCHAR(50)  NOT NULL,
+    data_acesso  DATE         NOT NULL,
+    hora_acesso  TIME         NOT NULL,
+    acao         VARCHAR(255) NOT NULL,
+
+    INDEX idx_logs_usuario (usuario),
+    INDEX idx_logs_data (data_acesso),
+
+    CONSTRAINT fk_logs_usuario
+        FOREIGN KEY (usuario) REFERENCES usuarios(usuario)
+        ON DELETE CASCADE   -- se o usuário for excluído, seus logs somem junto
+        ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
 INSERT INTO continentes (nome, populacao, area_km2) VALUES
 ('América do Sul', 434000000, 17840000),
 ('Europa', 746000000, 10180000);

@@ -1,5 +1,6 @@
 <?php
-require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../config/auth.php';
+exigirAdministrador();
 
 $pdo = conectarBanco();
 
@@ -108,6 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             definirMensagem('sucesso', 'País atualizado com sucesso!');
+            registrarLog('Editou o país "' . $dados['nome'] . '" (ID ' . $id . ')');
             header('Location: index.php');
             exit;
         } catch (PDOException $e) {

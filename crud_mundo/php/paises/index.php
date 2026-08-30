@@ -1,5 +1,6 @@
 <?php
-require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../config/auth.php';
+exigirLogin();
 
 $tituloPagina = 'Países - CRUD Mundo';
 
@@ -18,6 +19,7 @@ $stmt = $pdo->query($sql);
 $paises = $stmt->fetchAll();
 
 $mensagem = obterMensagem();
+$ehAdmin = ($_SESSION['tipo'] === 'Administrador');
 
 require __DIR__ . '/../includes/header.php';
 require __DIR__ . '/../includes/navbar.php';
@@ -27,9 +29,11 @@ require __DIR__ . '/../includes/navbar.php';
     <div class="conteudo-principal">
         <div class="pagina-titulo">
             <h1><i class="fa-solid fa-flag"></i> Países</h1>
-            <a href="cadastrar.php" class="btn btn-primario">
-                <i class="fa-solid fa-plus"></i> Novo país
-            </a>
+            <?php if ($ehAdmin): ?>
+                <a href="cadastrar.php" class="btn btn-primario">
+                    <i class="fa-solid fa-plus"></i> Novo país
+                </a>
+            <?php endif; ?>
         </div>
 
         <?php if ($mensagem): ?>
@@ -59,13 +63,13 @@ require __DIR__ . '/../includes/navbar.php';
                         <th>População</th>
                         <th>Idioma</th>
                         <th>Governante</th>
-                        <th>Ações</th>
+                        <?php if ($ehAdmin): ?><th>Ações</th><?php endif; ?>
                     </tr>
                 </thead>
                 <tbody>
                     <?php if (empty($paises)): ?>
                         <tr>
-                            <td colspan="6" style="text-align:center; padding:2rem; color:#888;">
+                            <td colspan="<?= $ehAdmin ? 6 : 5 ?>" style="text-align:center; padding:2rem; color:#888;">
                                 Nenhum país cadastrado ainda.
                             </td>
                         </tr>
@@ -77,6 +81,7 @@ require __DIR__ . '/../includes/navbar.php';
                                 <td><?= number_format((float) $pais['populacao'], 0, ',', '.') ?></td>
                                 <td><?= htmlspecialchars($pais['idioma'] ?: '-') ?></td>
                                 <td><?= htmlspecialchars($pais['governante_nome'] ?: '-') ?></td>
+                                <?php if ($ehAdmin): ?>
                                 <td>
                                     <div class="acoes-tabela">
                                         <a href="editar.php?id=<?= (int) $pais['id'] ?>" class="acao-editar" title="Editar">
@@ -92,6 +97,7 @@ require __DIR__ . '/../includes/navbar.php';
                                         </form>
                                     </div>
                                 </td>
+                                <?php endif; ?>
                             </tr>
                         <?php endforeach; ?>
                     <?php endif; ?>

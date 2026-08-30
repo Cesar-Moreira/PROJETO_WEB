@@ -1,5 +1,6 @@
 <?php
-require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../config/auth.php';
+exigirAdministrador();
 
 $pdo = conectarBanco();
 
@@ -80,6 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // A trigger trg_governantes_idade_update recalcula a idade automaticamente
 
             definirMensagem('sucesso', 'Governante atualizado com sucesso!');
+            registrarLog('Editou o governante "' . $dados['nome'] . '" (ID ' . $id . ')');
             header('Location: index.php');
             exit;
         } catch (PDOException $e) {

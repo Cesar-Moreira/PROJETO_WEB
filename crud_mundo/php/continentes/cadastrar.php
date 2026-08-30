@@ -1,5 +1,6 @@
 <?php
-require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../config/auth.php';
+exigirAdministrador();
 
 $erros = [];
 $dados = ['nome' => '', 'populacao' => '', 'area_km2' => ''];
@@ -35,6 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute();
 
             definirMensagem('sucesso', 'Continente "' . $dados['nome'] . '" cadastrado com sucesso!');
+            registrarLog('Cadastrou o continente "' . $dados['nome'] . '"');
             header('Location: index.php');
             exit;
         } catch (PDOException $e) {

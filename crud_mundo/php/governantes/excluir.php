@@ -1,5 +1,6 @@
 <?php
-require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../config/auth.php';
+exigirAdministrador();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: index.php');
@@ -22,6 +23,11 @@ if (!$id) {
 
 $pdo = conectarBanco();
 
+$stmtNome = $pdo->prepare('SELECT nome FROM governantes WHERE id = :id');
+$stmtNome->bindParam(':id', $id, PDO::PARAM_INT);
+$stmtNome->execute();
+$nomeGovernante = $stmtNome->fetchColumn();
+
 try {
     // governante_id em países/cidades usa ON DELETE SET NULL, então
     // excluir um governante não é bloqueado por integridade referencial.
@@ -31,6 +37,7 @@ try {
 
     if ($stmt->rowCount() > 0) {
         definirMensagem('sucesso', 'Governante excluído com sucesso!');
+        registrarLog('Excluiu o governante "' . $nomeGovernante . '" (ID ' . $id . ')');
     } else {
         definirMensagem('erro', 'Governante não encontrado.');
     }

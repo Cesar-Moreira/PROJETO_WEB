@@ -1,5 +1,6 @@
 <?php
-require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../config/auth.php';
+exigirAdministrador();
 
 $pdo = conectarBanco();
 
@@ -67,6 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // A trigger trg_paises_after_insert atualiza sozinha o total_paises do continente
 
             definirMensagem('sucesso', 'País "' . $dados['nome'] . '" cadastrado com sucesso!');
+            registrarLog('Cadastrou o país "' . $dados['nome'] . '"');
             header('Location: index.php');
             exit;
         } catch (PDOException $e) {

@@ -1,5 +1,6 @@
 <?php
-require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../config/auth.php';
+exigirAdministrador();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: index.php');
@@ -22,6 +23,11 @@ if (!$id) {
 
 $pdo = conectarBanco();
 
+$stmtNome = $pdo->prepare('SELECT nome FROM cidades WHERE id = :id');
+$stmtNome->bindParam(':id', $id, PDO::PARAM_INT);
+$stmtNome->execute();
+$nomeCidade = $stmtNome->fetchColumn();
+
 try {
     // Nenhuma outra tabela referencia "cidades", então a exclusão
     // aqui é sempre simples - não existe risco de erro de FK.
@@ -31,6 +37,7 @@ try {
 
     if ($stmt->rowCount() > 0) {
         definirMensagem('sucesso', 'Cidade excluída com sucesso!');
+        registrarLog('Excluiu a cidade "' . $nomeCidade . '" (ID ' . $id . ')');
     } else {
         definirMensagem('erro', 'Cidade não encontrada.');
     }

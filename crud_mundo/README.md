@@ -1,19 +1,19 @@
-#  CRUD Mundo — Programação Web
+# 🌍 CRUD Mundo — Programação Web
 
-**Aluno(a):** _Cesar Fernando Araujo Moreira_
+**Aluno(a):** _[preencha com seu nome completo]_
 **Curso:** Desenvolvimento de Sistemas
 **Unidade:** Etec — São José dos Campos
 **Disciplina:** Programação Web
 
-##  Descrição do projeto
+## 📖 Descrição do projeto
 
 Sistema web completo para gerenciamento de informações geográficas do mundo, permitindo cadastrar, listar, editar e excluir **Continentes**, **Países**, **Cidades** e **Governantes**, respeitando os relacionamentos entre essas entidades (um continente tem vários países, um país tem várias cidades, e países/cidades podem ter um governante vinculado).
 
-##  Objetivo
+## 🎯 Objetivo
 
 Implementar um CRUD (Create, Read, Update, Delete) completo, com interface web responsiva, validação de dados no frontend e no backend, e integridade referencial no banco de dados.
 
-##  Tecnologias utilizadas
+## 🛠️ Tecnologias utilizadas
 
 - HTML5
 - CSS3 (Flexbox, Grid, responsivo)
@@ -24,23 +24,26 @@ Implementar um CRUD (Create, Read, Update, Delete) completo, com interface web r
 - Google Fonts (tipografia)
 - Normalize.css (consistência entre navegadores)
 
-##  Estrutura do projeto
+## 📁 Estrutura do projeto
 
 ```
 crud_mundo/
 ├── php/                     # TODO o backend (lógica PHP), agrupado aqui
 │   ├── config/              # Conexão com o banco e configurações globais
 │   │   ├── database.php     # Cria a conexão PDO (usada por todos os módulos)
-│   │   └── config.php        # Carrega o .env, define constantes e sessão
+│   │   ├── config.php        # Carrega o .env, define constantes, sessão e CSRF
+│   │   └── auth.php          # Login, permissões (exigirLogin/exigirAdministrador) e logs
 │   ├── includes/            # Trechos de HTML reutilizados em todas as páginas
 │   │   ├── header.php       # <head>, fontes, ícones, CSS
-│   │   ├── navbar.php       # Menu superior
-│   │   ├── sidebar.php      # Atalhos rápidos de cadastro
+│   │   ├── navbar.php       # Menu superior (mostra usuário logado)
+│   │   ├── sidebar.php      # Atalhos rápidos de cadastro (só para Administrador)
 │   │   └── footer.php       # Fechamento do HTML e scripts JS
 │   ├── continentes/         # CRUD de continentes
 │   ├── paises/                # CRUD de países
 │   ├── cidades/               # CRUD de cidades
-│   └── governantes/           # CRUD de governantes
+│   ├── governantes/           # CRUD de governantes
+│   ├── usuarios/              # CRUD de usuários (Administrador)
+│   └── logs/                  # Visualização de logs (Administrador, somente leitura)
 ├── css/                     # TODO o CSS do projeto
 │   ├── style.css             # Estilo principal (cores, cards, tabelas, formulários)
 │   └── responsive.css         # Ajustes para tablet e celular
@@ -48,11 +51,15 @@ crud_mundo/
 │   ├── script.js              # Menu mobile, pesquisa dinâmica, confirmação de exclusão
 │   └── validacoes.js          # Validação de campos obrigatórios nos formulários
 ├── sql/
-│   └── bd_mundo.sql          # Script de criação do banco, tabelas e dados de exemplo
+│   ├── bd_mundo.sql          # Script de criação do banco, tabelas e dados de exemplo
+│   └── seed_usuarios.php      # Script de uso único: cria os 2 usuários de teste
 ├── img/                     # Imagens do projeto (se houver)
 ├── .env                     # Credenciais do banco (NÃO versionado no Git)
 ├── .env.example              # Modelo do .env, esse sim é versionado
 ├── .gitignore
+├── login.php                 # Tela de login
+├── logout.php                 # Encerra a sessão
+├── trocar_senha.php           # Troca de senha (obrigatória no 1º acesso)
 ├── index.php                 # Dashboard inicial (fica na raiz para ser a página de entrada do site)
 └── README.md
 ```
@@ -65,7 +72,7 @@ Cada módulo (`php/continentes/`, `php/paises/`, `php/cidades/`, `php/governante
 - `editar.php` — formulário de edição, pré-preenchido
 - `excluir.php` — processa a exclusão (com confirmação via JavaScript antes)
 
-##  Estrutura do banco de dados (bd_mundo)
+## 🗄️ Estrutura do banco de dados (bd_mundo)
 
 | Tabela | Campos principais | Relacionamento |
 |---|---|---|
@@ -80,7 +87,7 @@ Cada módulo (`php/continentes/`, `php/paises/`, `php/cidades/`, `php/governante
 - Não é possível excluir um continente que tenha países vinculados, nem um país que tenha cidades vinculadas (`ON DELETE RESTRICT`).
 - Excluir um governante **não** apaga o país/cidade vinculado — apenas remove o vínculo (`ON DELETE SET NULL`).
 
-##  Funcionalidades
+## ✅ Funcionalidades
 
 - CRUD completo (criar, listar, editar, excluir) para os 4 módulos
 - Pesquisa dinâmica pelo nome, sem recarregar a página
@@ -91,7 +98,7 @@ Cada módulo (`php/continentes/`, `php/paises/`, `php/cidades/`, `php/governante
 - Dashboard com estatísticas em tempo real (contagens, cidade mais populosa, maior país, últimos cadastros)
 - Layout responsivo (desktop, tablet e celular)
 
-##  Como instalar e configurar
+## ⚙️ Como instalar e configurar
 
 ### Pré-requisitos
 - [XAMPP](https://www.apachefriends.org/) instalado (Apache + MySQL + PHP)
@@ -105,14 +112,45 @@ Cada módulo (`php/continentes/`, `php/paises/`, `php/cidades/`, `php/governante
 5. Acesse `http://localhost/phpmyadmin`, vá na aba **SQL**, cole o conteúdo de `sql/bd_mundo.sql` e execute. Isso cria o banco `bd_mundo`, as tabelas e alguns dados de exemplo.
 6. Acesse `http://localhost/crud_mundo/` no navegador.
 
-##  Como usar
+## 🚀 Como usar
 
 1. O **Dashboard** mostra um resumo geral do sistema.
 2. Use o menu superior para navegar entre Continentes, Países, Cidades e Governantes.
 3. Em cada módulo, use o botão "Novo(a) ..." para cadastrar, os ícones de lápis/lixeira na tabela para editar/excluir, e a caixa de pesquisa para filtrar pelo nome.
 4. Cadastre primeiro os **Continentes**, depois **Governantes** (opcional), depois **Países** (que dependem de um continente) e por fim **Cidades** (que dependem de um país).
 
-##  Boas práticas de segurança aplicadas
+## 🔐 Autenticação e permissões
+
+O sistema exige login para qualquer acesso. Existem dois tipos de usuário:
+
+| Tipo | Pode visualizar (Continentes/Países/Cidades/Governantes) | Pode cadastrar/editar/excluir | Acessa Usuários e Logs |
+|---|---|---|---|
+| **Administrador** | ✅ | ✅ | ✅ |
+| **Comum** | ✅ | ❌ (botões ficam ocultos e as rotas bloqueiam o acesso mesmo por URL direta) | ❌ |
+
+### Tabelas do banco
+
+- **`usuarios`**: chave primária é o próprio login (`usuario`), além de `nome_exibicao`, `senha` (hash bcrypt), `status` (Ativo/Inativo/Bloqueado), `tipo` (Administrador/Comum), `qtd_acessos` e `tentativas_erradas`.
+- **`logs`**: `id` (auto-incremento), `usuario`, `data_acesso`, `hora_acesso` e `acao` — registra todo cadastro, edição e exclusão feito nos 4 módulos principais e no módulo de usuários.
+
+### Regras de negócio implementadas
+
+- **Bloqueio automático**: 3 senhas erradas seguidas mudam o status do usuário para "Bloqueado". Só um Administrador pode reverter isso (tela Usuários → Editar → Status = Ativo, o que também zera o contador de tentativas).
+- **Troca de senha obrigatória no primeiro acesso**: `qtd_acessos` começa em 0; ao logar com sucesso pela primeira vez ele vira 1, e o sistema força a passagem por `trocar_senha.php` antes de liberar qualquer outra página.
+- Se um Administrador redefinir a senha de alguém pela tela de edição, o mesmo mecanismo se repete: o usuário é obrigado a trocá-la de novo no próximo login.
+
+### Usuários de teste
+
+Depois de importar o `sql/bd_mundo.sql`, acesse **uma única vez** `http://localhost/crud_mundo/sql/seed_usuarios.php` no navegador para criar:
+
+| Usuário | Senha | Tipo |
+|---|---|---|
+| `admin` | `admin123` | Administrador |
+| `usuario` | `usuario123` | Comum |
+
+> Como é o primeiro acesso de ambos, o sistema vai pedir para trocar a senha assim que você logar.
+
+## 🔒 Boas práticas de segurança aplicadas
 
 - Credenciais do banco isoladas em `.env`, fora do controle de versão
 - Conexão via PDO com **Prepared Statements** em 100% das queries (proteção contra SQL Injection)
@@ -121,16 +159,18 @@ Cada módulo (`php/continentes/`, `php/paises/`, `php/cidades/`, `php/governante
 - Tratamento de erros com `try/catch`, sem expor detalhes sensíveis ao usuário final
 - **Exclusões feitas via formulário POST** (não mais por link GET), evitando que a ação seja disparada acidentalmente por um crawler ou link externo
 - **Proteção CSRF**: todo formulário de cadastro, edição e exclusão envia um token único de sessão, validado no servidor antes de qualquer alteração no banco
+- **Senhas nunca armazenadas em texto puro**: sempre com `password_hash()` (bcrypt) e verificadas com `password_verify()`
+- **Controle de acesso por sessão em toda página protegida** (`exigirLogin()` / `exigirAdministrador()`), e não só escondendo botões na tela — mesmo digitando a URL direto, um usuário Comum é bloqueado de cadastrar/editar/excluir
 
 > Este projeto não possui sistema de login — qualquer pessoa com acesso à URL pode cadastrar/editar/excluir. Isso é intencional, pois autenticação não fazia parte do escopo da atividade; veja "Possíveis melhorias futuras".
 
-##  Desafio extra implementado
+## 🏆 Desafio extra implementado
 
 - Pesquisa dinâmica (JavaScript) por nome em todos os módulos, sem recarregar a página
 - Dashboard com **cidade mais populosa de cada país** (não só a mais populosa do mundo)
 - Dashboard com **total de cidades cadastradas por continente**
 
-##  Possíveis melhorias futuras
+## 🔮 Possíveis melhorias futuras
 
 - Sistema de login/autenticação para restringir o acesso ao CRUD
 - Upload de bandeiras/fotos para países e cidades
@@ -138,6 +178,6 @@ Cada módulo (`php/continentes/`, `php/paises/`, `php/cidades/`, `php/governante
 - Paginação nas listagens para grandes volumes de dados
 - Gráficos no dashboard (população por continente, etc.)
 
-##  Licença
+## 📄 Licença
 
 Projeto acadêmico, desenvolvido para fins de avaliação na disciplina de Programação Web — Etec.

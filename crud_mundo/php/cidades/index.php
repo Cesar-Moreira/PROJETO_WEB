@@ -1,5 +1,6 @@
 <?php
-require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../config/auth.php';
+exigirLogin();
 
 $tituloPagina = 'Cidades - CRUD Mundo';
 
@@ -17,6 +18,7 @@ $stmt = $pdo->query($sql);
 $cidades = $stmt->fetchAll();
 
 $mensagem = obterMensagem();
+$ehAdmin = ($_SESSION['tipo'] === 'Administrador');
 
 require __DIR__ . '/../includes/header.php';
 require __DIR__ . '/../includes/navbar.php';
@@ -26,9 +28,11 @@ require __DIR__ . '/../includes/navbar.php';
     <div class="conteudo-principal">
         <div class="pagina-titulo">
             <h1><i class="fa-solid fa-city"></i> Cidades</h1>
-            <a href="cadastrar.php" class="btn btn-primario">
-                <i class="fa-solid fa-plus"></i> Nova cidade
-            </a>
+            <?php if ($ehAdmin): ?>
+                <a href="cadastrar.php" class="btn btn-primario">
+                    <i class="fa-solid fa-plus"></i> Nova cidade
+                </a>
+            <?php endif; ?>
         </div>
 
         <?php if ($mensagem): ?>
@@ -58,13 +62,13 @@ require __DIR__ . '/../includes/navbar.php';
                         <th>População</th>
                         <th>Governante</th>
                         <th>Fundação</th>
-                        <th>Ações</th>
+                        <?php if ($ehAdmin): ?><th>Ações</th><?php endif; ?>
                     </tr>
                 </thead>
                 <tbody>
                     <?php if (empty($cidades)): ?>
                         <tr>
-                            <td colspan="6" style="text-align:center; padding:2rem; color:#888;">
+                            <td colspan="<?= $ehAdmin ? 6 : 5 ?>" style="text-align:center; padding:2rem; color:#888;">
                                 Nenhuma cidade cadastrada ainda.
                             </td>
                         </tr>
@@ -76,6 +80,7 @@ require __DIR__ . '/../includes/navbar.php';
                                 <td><?= number_format((float) $cidade['populacao'], 0, ',', '.') ?></td>
                                 <td><?= htmlspecialchars($cidade['governante_nome'] ?: '-') ?></td>
                                 <td><?= $cidade['data_fundacao'] ? date('d/m/Y', strtotime($cidade['data_fundacao'])) : '-' ?></td>
+                                <?php if ($ehAdmin): ?>
                                 <td>
                                     <div class="acoes-tabela">
                                         <a href="editar.php?id=<?= (int) $cidade['id'] ?>" class="acao-editar" title="Editar">
@@ -91,6 +96,7 @@ require __DIR__ . '/../includes/navbar.php';
                                         </form>
                                     </div>
                                 </td>
+                                <?php endif; ?>
                             </tr>
                         <?php endforeach; ?>
                     <?php endif; ?>
