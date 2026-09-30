@@ -1,0 +1,22 @@
+# Credenciais e variáveis de ambiente - NUNCA subir para o GitHub
+.env
+.env.*
+!.env.example
+
+# Dependências (caso algum projeto passe a usar)
+node_modules/
+vendor/
+
+# Logs e arquivos temporários
+*.log
+*.tmp
+*.bak
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editores e IDEs
+.vscode/
+.idea/

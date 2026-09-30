@@ -1,11 +1,9 @@
 # 🌍 CRUD Mundo — Programação Web
 
-**Aluno(a):** _[preencha com seu nome completo]_
-**Curso:** Desenvolvimento de Sistemas
-**Unidade:** Etec — São José dos Campos
-**Disciplina:** Programação Web
+**Autor:** César Moreira
+**Curso:** Desenvolvimento de Sistemas — Etec, São José dos Campos
 
-## 📖 Descrição do projeto
+## 📖 Sobre o projeto
 
 Sistema web completo para gerenciamento de informações geográficas do mundo, permitindo cadastrar, listar, editar e excluir **Continentes**, **Países**, **Cidades** e **Governantes**, respeitando os relacionamentos entre essas entidades (um continente tem vários países, um país tem várias cidades, e países/cidades podem ter um governante vinculado).
 
@@ -53,7 +51,6 @@ crud_mundo/
 ├── sql/
 │   ├── bd_mundo.sql          # Script de criação do banco, tabelas e dados de exemplo
 │   └── seed_usuarios.php      # Script de uso único: cria os 2 usuários de teste
-├── img/                     # Imagens do projeto (se houver)
 ├── .env                     # Credenciais do banco (NÃO versionado no Git)
 ├── .env.example              # Modelo do .env, esse sim é versionado
 ├── .gitignore
@@ -97,15 +94,22 @@ Cada módulo (`php/continentes/`, `php/paises/`, `php/cidades/`, `php/governante
 - Validação de campos obrigatórios no frontend (JavaScript) e no backend (PHP)
 - Dashboard com estatísticas em tempo real (contagens, cidade mais populosa, maior país, últimos cadastros)
 - Layout responsivo (desktop, tablet e celular)
+- Login com dois perfis de acesso (Administrador e Comum)
+- Bloqueio automático do usuário após 3 tentativas de senha incorretas
+- Troca de senha obrigatória no primeiro acesso
+- Cadastro e gerenciamento de usuários (Administrador)
+- Registro de logs das ações de cadastro, edição e exclusão
 
-## ⚙️ Como instalar e configurar
+## ⚙️ Como executar
 
-### Pré-requisitos
-- [XAMPP](https://www.apachefriends.org/) instalado (Apache + MySQL + PHP)
+### Requisitos
+- [XAMPP](https://www.apachefriends.org/) (Apache + MySQL + PHP 8+)
+- Git (para clonar o repositório)
+- Navegador web
 
 ### Passo a passo
 
-1. Copie a pasta `crud_mundo` para dentro de `htdocs` do XAMPP.
+1. Clone o repositório e copie a pasta `crud_mundo` para dentro de `htdocs` do XAMPP (o nome da pasta deve continuar `crud_mundo`, pois o sistema usa `/crud_mundo` como endereço base).
 2. Abra o XAMPP Control Panel e inicie **Apache** e **MySQL**.
 3. Copie o arquivo `.env.example`, cole na mesma pasta e renomeie a cópia para `.env`.
 4. Abra o `.env` e confirme usuário/senha do seu MySQL (no XAMPP padrão, `root` sem senha já funciona).
@@ -139,7 +143,7 @@ O sistema exige login para qualquer acesso. Existem dois tipos de usuário:
 - **Troca de senha obrigatória no primeiro acesso**: `qtd_acessos` começa em 0; ao logar com sucesso pela primeira vez ele vira 1, e o sistema força a passagem por `trocar_senha.php` antes de liberar qualquer outra página.
 - Se um Administrador redefinir a senha de alguém pela tela de edição, o mesmo mecanismo se repete: o usuário é obrigado a trocá-la de novo no próximo login.
 
-### Usuários de teste
+### Usuários de demonstração (apenas para testes locais)
 
 Depois de importar o `sql/bd_mundo.sql`, acesse **uma única vez** `http://localhost/crud_mundo/sql/seed_usuarios.php` no navegador para criar:
 
@@ -148,7 +152,7 @@ Depois de importar o `sql/bd_mundo.sql`, acesse **uma única vez** `http://local
 | `admin` | `admin123` | Administrador |
 | `usuario` | `usuario123` | Comum |
 
-> Como é o primeiro acesso de ambos, o sistema vai pedir para trocar a senha assim que você logar.
+> Como é o primeiro acesso de ambos, o sistema vai pedir para trocar a senha assim que você logar. Essas credenciais servem apenas para ambiente local de teste; nunca as utilize em um sistema publicado.
 
 ## 🔒 Boas práticas de segurança aplicadas
 
@@ -162,7 +166,6 @@ Depois de importar o `sql/bd_mundo.sql`, acesse **uma única vez** `http://local
 - **Senhas nunca armazenadas em texto puro**: sempre com `password_hash()` (bcrypt) e verificadas com `password_verify()`
 - **Controle de acesso por sessão em toda página protegida** (`exigirLogin()` / `exigirAdministrador()`), e não só escondendo botões na tela — mesmo digitando a URL direto, um usuário Comum é bloqueado de cadastrar/editar/excluir
 
-> Este projeto não possui sistema de login — qualquer pessoa com acesso à URL pode cadastrar/editar/excluir. Isso é intencional, pois autenticação não fazia parte do escopo da atividade; veja "Possíveis melhorias futuras".
 
 ## 🏆 Desafio extra implementado
 
@@ -172,12 +175,14 @@ Depois de importar o `sql/bd_mundo.sql`, acesse **uma única vez** `http://local
 
 ## 🔮 Possíveis melhorias futuras
 
-- Sistema de login/autenticação para restringir o acesso ao CRUD
+- Recuperação de senha por e-mail
 - Upload de bandeiras/fotos para países e cidades
 - Exportação dos dados em PDF ou Excel
 - Paginação nas listagens para grandes volumes de dados
 - Gráficos no dashboard (população por continente, etc.)
 
-## 📄 Licença
+## 👤 Autor
 
-Projeto acadêmico, desenvolvido para fins de avaliação na disciplina de Programação Web — Etec.
+César Moreira — [github.com/Cesar-Moreira](https://github.com/Cesar-Moreira)
+
+Curso de Desenvolvimento de Sistemas — Etec, São José dos Campos.
