@@ -1,11 +1,8 @@
 <?php
 /**
  * navbar.php
- * -------------------------------------------------------------
  * Menu superior, presente em todas as páginas.
- * Usa a variável global $_SERVER['REQUEST_URI'] para destacar
- * (classe "ativo") o link do módulo em que o usuário está.
- * -------------------------------------------------------------
+ * Destaca (classe "ativo") o link do módulo em que o usuário está.
  */
 $uriAtual = $_SERVER['REQUEST_URI'];
 
@@ -39,6 +36,9 @@ function linkAtivo(string $trecho, string $uriAtual): string
         </a>
         <a href="<?= URL_BASE ?>/php/governantes/index.php" class="<?= linkAtivo('/governantes/', $uriAtual) ?>">
             <i class="fa-solid fa-user-tie"></i> Governantes
+        </a>
+        <a href="<?= URL_BASE ?>/php/mapa/index.php" class="<?= linkAtivo('/mapa/', $uriAtual) ?>">
+            <i class="fa-solid fa-location-dot"></i> Mapa
         </a>
 
         <?php if (($_SESSION['tipo'] ?? '') === 'Administrador'): ?>
